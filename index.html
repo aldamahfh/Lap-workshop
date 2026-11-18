@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ورشة عمل: مستكشفات المختبر - الثانوية ٣١</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal-dark: #0f4c5c;
+    --teal-main: #1b6b7d;
+    --teal-light: #e0f2f1;
+    --mint-bg: #f4f9f8;
+    --gold: #d99b26;
+    --gold-light: #fef5e3;
+    --coral: #d9534f;
+    --purple: #6f42c1;
+    --text-dark: #1e293b;
+    --text-muted: #475569;
+    --white: #ffffff;
+    --shadow: 0 8px 24px rgba(15, 76, 92, 0.1);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Cairo', sans-serif;
+  }
+
+  body {
+    background-color: var(--mint-bg);
+    color: var(--text-dark);
+    line-height: 1.7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  /* Header & Navigation - غير مثبت حتى لا يغطي أي جزء من الصفحة */
+  header {
+    background: linear-gradient(135deg, var(--teal-dark), var(--teal-main));
+    color: var(--white);
+    padding: 1.4rem 1rem 1.2rem;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+    width: 100%;
+  }
+
+  .header-top {
+    max-width: 1150px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+  }
+
+  .badge-school {
+    background: rgba(255, 255, 255, 0.18);
+    padding: 5px 14px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+
+  .title-block h1 {
+    font-size: 1.9rem;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+  }
+
+  .title-block p {
+    font-size: 0.95rem;
+    color: #cde8e5;
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    max-width: 1150px;
+    margin: 0 auto;
+    padding-top: 0.8rem;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+
+  .nav-btn {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--white);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 8px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.92rem;
+    font-weight: 700;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .nav-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+  }
+
+  .nav-btn.active {
+    background: var(--gold);
+    color: var(--white);
+    border-color: var(--gold);
+    box-shadow: 0 4px 12px rgba(217, 155, 38, 0.4);
+  }
+
+  /* Main Container */
+  main {
+    flex: 1;
+    max-width: 1150px;
+    width: 100%;
+    margin: 1.8rem auto;
+    padding: 0 1.2rem;
+  }
+
+  .page-section {
+    display: none;
+    animation: fadeIn 0.35s ease;
+    width: 100%;
+  }
+
+  .page-section.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Cards & Layout */
+  .card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 1.8rem;
+    box-shadow: var(--shadow);
+    margin-bottom: 1.8rem;
+    border: 1px solid #e2e8f0;
+    width: 100%;
+  }
+
+  .section-title {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--teal-dark);
+    margin-bottom: 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 3px solid var(--teal-light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* Meta Info Grid */
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .meta-box {
+    background: var(--teal-light);
+    border-right: 4px solid var(--teal-main);
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  .meta-box strong {
+    display: block;
+    color: var(--teal-dark);
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+  }
+
+  .meta-box span {
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    font-weight: 600;
+  }
+
+  /* Questionnaire Styles */
+  .quiz-intro {
+    background: var(--gold-light);
+    border-right: 4px solid var(--gold);
+    padding: 1rem 1.2rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.2rem;
+  }
+
+  .form-group label.q-label {
+    display: block;
+    font-weight: 700;
+    color: var(--teal-dark);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+  }
+
+  .input-text {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+  }
+
+  .input-text:focus {
+    outline: none;
+    border-color: var(--teal-main);
+  }
+
+  .options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .option-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f8fafc;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .option-item:hover {
+    background: var(--teal-light);
+    border-color: var(--teal-main);
+  }
+
+  .option-item input[type="radio"] {
+    accent-color: var(--teal-dark);
+    width: 18px;
+    height: 18px;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--teal-dark), var(--teal-main));
+    color: var(--white);
+    border: none;
+    padding: 12px 26px;
+    border-radius: 12px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(15, 76, 92, 0.25);
+  }
+
+  .btn-gold {
+    background: linear-gradient(135deg, #c78814, var(--gold));
+    color: var(--white);
+    border: none;
+    padding: 12px 26px;
+    border-radius: 12px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-gold:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(217, 155, 38, 0.35);
+  }
+
+  .result-banner {
+    display: none;
+    margin-top: 1.2rem;
+    padding: 1.2rem;
+    border-radius: 12px;
+    background: #ecfdf5;
+    border: 2px solid #10b981;
+    color: #065f46;
+    font-weight: 700;
+  }
+
+  /* ==================== تنسيق الفيديوهات وإطار الشاشة الكامل ==================== */
+  .videos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2.2rem;
+  }
+
+  .video-card {
+    background: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(15, 76, 92, 0.14);
+    border: 2px solid #cbd5e1;
+    width: 100%;
+  }
+
+  .video-header-bar {
+    background: var(--teal-light);
+    padding: 0.9rem 1.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #b2dfdb;
+  }
+
+  .video-header-bar h4 {
+    color: var(--teal-dark);
+    font-size: 1.15rem;
+    font-weight: 800;
+  }
+
+  .video-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .btn-fullscreen {
+    background: var(--teal-dark);
+    color: var(--white);
+    border: none;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn-fullscreen:hover {
+    background: var(--teal-main);
+  }
+
+  .btn-drive-link {
+    background: var(--white);
+    color: var(--teal-dark);
+    border: 1px solid var(--teal-main);
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 0.86rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  /* حاوية الفيديو المتناسبة مع الشاشة الكاملة دون قص أو سواد */
+  .video-stage {
+    position: relative;
+    width: 100%;
+    height: 75vh;
+    min-height: 400px;
+    max-height: 720px;
+    background: #0f172a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* واجهة النقر للتشغيل (تمنع الشاشة السوداء وتضمن التشغيل عند الضغط فقط) */
+  .video-poster-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(15, 76, 92, 0.92), rgba(27, 107, 125, 0.88));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    cursor: pointer;
+    z-index: 5;
+    text-align: center;
+    padding: 1.5rem;
+    transition: background 0.3s;
+  }
+
+  .video-poster-overlay:hover {
+    background: linear-gradient(135deg, rgba(15, 76, 92, 0.97), rgba(217, 155, 38, 0.85));
+  }
+
+  .play-circle {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 0 0 12px rgba(255, 255, 255, 0.18);
+    transition: transform 0.25s;
+  }
+
+  .video-poster-overlay:hover .play-circle {
+    transform: scale(1.1);
+  }
+
+  .video-poster-overlay h5 {
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 0.3rem;
+  }
+
+  .video-poster-overlay p {
+    font-size: 0.95rem;
+    color: #e0f2f1;
+  }
+
+  .video-stage iframe,
+  .video-stage video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% + 56px);
+    border: none;
+    object-fit: contain;
+    background: #000;
+  }
+
+  /* Axes & Content Cards */
+  .axes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.3rem;
+  }
+
+  .axis-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 1.4rem;
+    border-top: 5px solid var(--teal-main);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    border-left: 1px solid #e2e8f0;
+    border-right: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .axis-card:nth-child(2) { border-top-color: var(--gold); }
+  .axis-card:nth-child(3) { border-top-color: #2b8a3e; }
+  .axis-card:nth-child(4) { border-top-color: var(--purple); }
+
+  .axis-num {
+    display: inline-block;
+    background: var(--teal-dark);
+    color: var(--white);
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    border-radius: 50%;
+    font-weight: 800;
+    margin-left: 8px;
+  }
+
+  .axis-card h3 {
+    font-size: 1.15rem;
+    color: var(--teal-dark);
+    margin-bottom: 0.8rem;
+  }
+
+  .axis-card ul {
+    padding-right: 1.2rem;
+    margin-bottom: 0.9rem;
+    font-size: 0.93rem;
+    color: var(--text-muted);
+  }
+
+  .axis-card ul li {
+    margin-bottom: 4px;
+  }
+
+  .activity-tag {
+    background: var(--gold-light);
+    color: #92400e;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 700;
+  }
+
+  /* Hazard Symbols Grid */
+  .hazards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .hazard-item {
+    background: #fff5f5;
+    border: 1px solid #feb2b2;
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .hazard-diamond {
+    width: 52px;
+    height: 52px;
+    background: #fff;
+    border: 3px solid #dc2626;
+    transform: rotate(45deg);
+    margin: 0.5rem auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hazard-diamond span {
+    transform: rotate(-45deg);
+    font-size: 1.4rem;
+  }
+
+  .hazard-item strong {
+    display: block;
+    color: #991b1b;
+    font-size: 0.95rem;
+  }
+
+  .hazard-item p {
+    font-size: 0.82rem;
+    color: #7f1d1d;
+    margin-top: 4px;
+  }
+
+  /* Safety & Emergency Two Columns */
+  .two-col {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .safety-list {
+    list-style: none;
+  }
+
+  .safety-list li {
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border-right: 4px solid var(--teal-main);
+    font-weight: 600;
+    font-size: 0.94rem;
+  }
+
+  .emergency-list li {
+    border-right-color: var(--coral);
+    background: #fff8f8;
+  }
+
+  /* Lab Tools Grid */
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 1.4rem;
+  }
+
+  .tool-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    border: 1px solid #e2e8f0;
+    transition: transform 0.25s;
+  }
+
+  .tool-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .tool-icon {
+    font-size: 2.3rem;
+    margin-bottom: 0.6rem;
+    display: inline-block;
+    background: var(--teal-light);
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    border-radius: 14px;
+  }
+
+  .tool-card h3 {
+    color: var(--teal-dark);
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+
+  .tool-card p {
+    font-size: 0.94rem;
+    color: var(--text-muted);
+    margin-bottom: 0.8rem;
+  }
+
+  .tool-examples {
+    background: #f8fafc;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.86rem;
+    color: var(--teal-dark);
+    font-weight: 700;
+  }
+
+  /* Certificate Styling */
+  .cert-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+    background: #f8fafc;
+    padding: 1.2rem;
+    border-radius: 12px;
+    border: 1px solid #cbd5e1;
+  }
+
+  .cert-controls .field {
+    flex: 1;
+    min-width: 240px;
+  }
+
+  .certificate-wrapper {
+    background: #fff;
+    padding: 18px;
+    border-radius: 16px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+    max-width: 850px;
+    margin: 0 auto;
+  }
+
+  .certificate-border {
+    border: 8px double var(--teal-dark);
+    outline: 3px solid var(--gold);
+    outline-offset: -14px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    background: radial-gradient(circle at top right, #f0fdfa, #ffffff 60%, #fefce8);
+  }
+
+  .cert-header {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--teal-main);
+    margin-bottom: 0.3rem;
+  }
+
+  .cert-title {
+    font-size: 2.3rem;
+    font-weight: 900;
+    color: var(--teal-dark);
+    margin: 0.5rem 0;
+  }
+
+  .cert-subtitle {
+    font-size: 1.05rem;
+    color: var(--gold);
+    font-weight: 800;
+    margin-bottom: 1.4rem;
+  }
+
+  .cert-body {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    max-width: 680px;
+    margin: 0 auto 1.5rem;
+    line-height: 1.9;
+  }
+
+  .cert-student-name {
+    display: block;
+    font-size: 1.9rem;
+    font-weight: 900;
+    color: var(--teal-dark);
+    border-bottom: 2px dashed var(--gold);
+    padding: 4px 20px;
+    margin: 0.6rem auto;
+    max-width: 480px;
+  }
+
+  .cert-signatures {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 2.2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid #e2e8f0;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .sig-box strong {
+    display: block;
+    color: var(--teal-dark);
+    font-size: 1rem;
+  }
+
+  .sig-box span {
+    color: var(--text-muted);
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  .cert-seal {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), #b45309);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.85rem;
+    box-shadow: 0 4px 12px rgba(217, 155, 38, 0.4);
+    border: 3px dashed #fff;
+    text-align: center;
+    padding: 5px;
+  }
+
+  /* Page Footer Navigation */
+  .page-nav-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #cbd5e1;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  footer.site-footer {
+    background: var(--teal-dark);
+    color: #e0f2f1;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    margin-top: 3rem;
+    font-size: 0.92rem;
+  }
+
+  @media (max-width: 600px) {
+    .video-stage {
+      height: 55vh;
+      min-height: 280px;
+    }
+  }
+
+  @media print {
+    body * {
+      visibility: hidden;
+    }
+    #printable-certificate, #printable-certificate * {
+      visibility: visible;
+    }
+    #printable-certificate {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      box-shadow: none;
+    }
+  }
+
+  /* Interactive Activities in Page 3 */
+  .interactive-activity-box {
+    margin-top: 12px;
+    background: #f0fdfa;
+    border: 1.5px solid var(--teal-main);
+    border-radius: 12px;
+    padding: 12px;
+  }
+  .interactive-activity-box h5 {
+    color: var(--teal-dark);
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .mini-choice-btn {
+    display: block;
+    width: 100%;
+    text-align: right;
+    background: #fff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 7px 12px;
+    margin-bottom: 6px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .mini-choice-btn:hover {
+    background: var(--teal-light);
+    border-color: var(--teal-main);
+  }
+  .mini-feedback {
+    margin-top: 6px;
+    font-size: 0.86rem;
+    font-weight: 700;
+    padding: 6px 10px;
+    border-radius: 8px;
+    display: none;
+  }
+  .mini-feedback.ok {
+    display: block;
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #86efac;
+  }
+  .mini-feedback.err {
+    display: block;
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+  }
+
+  /* Page 4 Accordion List for Lab Tools */
+  .tools-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .tool-acc-item {
+    background: var(--white);
+    border: 1.5px solid #cbd5e1;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(15, 76, 92, 0.06);
+    transition: border-color 0.2s;
+  }
+  .tool-acc-item.open {
+    border-color: var(--teal-main);
+  }
+  .tool-acc-header {
+    width: 100%;
+    background: #f8fafc;
+    border: none;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    text-align: right;
+    transition: background 0.2s;
+  }
+  .tool-acc-header:hover {
+    background: var(--teal-light);
+  }
+  .tool-acc-item.open .tool-acc-header {
+    background: var(--teal-light);
+    border-bottom: 1px solid #b2dfdb;
+  }
+  .tool-acc-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--teal-dark);
+  }
+  .tool-acc-badge {
+    background: var(--teal-dark);
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+  }
+  .tool-acc-arrow {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--teal-main);
+    transition: transform 0.25s;
+  }
+  .tool-acc-item.open .tool-acc-arrow {
+    transform: rotate(180deg);
+  }
+  .tool-acc-body {
+    display: none;
+    padding: 16px 20px;
+    background: #fff;
+    animation: fadeIn 0.25s ease;
+  }
+  .tool-acc-item.open .tool-acc-body {
+    display: block;
+  }
+
+  /* Fixed Responsive Certificate Styling */
+  .certificate-wrapper {
+    background: #fff;
+    padding: 14px;
+    border-radius: 16px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+    max-width: 820px;
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  .certificate-border {
+    border: 6px double var(--teal-dark);
+    box-shadow: inset 0 0 0 4px #ffffff, inset 0 0 0 6px var(--gold);
+    padding: 2.2rem 1.6rem;
+    text-align: center;
+    background: radial-gradient(circle at top right, #f0fdfa, #ffffff 60%, #fefce8);
+    border-radius: 10px;
+    position: relative;
+    word-wrap: break-word;
+  }
+  .cert-header {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--teal-main);
+    margin-bottom: 0.4rem;
+  }
+  .cert-title {
+    font-size: clamp(1.7rem, 4vw, 2.3rem);
+    font-weight: 900;
+    color: var(--teal-dark);
+    margin: 0.4rem 0;
+  }
+  .cert-subtitle {
+    font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+    color: var(--gold);
+    font-weight: 800;
+    margin-bottom: 1.3rem;
+  }
+  .cert-body {
+    font-size: clamp(0.98rem, 2.5vw, 1.12rem);
+    color: var(--text-dark);
+    max-width: 660px;
+    margin: 0 auto 1.4rem;
+    line-height: 1.9;
+  }
+  .cert-student-name {
+    display: block;
+    font-size: clamp(1.35rem, 3.5vw, 1.85rem);
+    font-weight: 900;
+    color: var(--teal-dark);
+    border-bottom: 2px dashed var(--gold);
+    padding: 6px 14px;
+    margin: 0.7rem auto;
+    max-width: 90%;
+    min-height: 44px;
+  }
+  .cert-signatures {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid #e2e8f0;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+  }
+  .sig-box {
+    min-width: 160px;
+    text-align: center;
+  }
+  @media print {
+    @page {
+      size: A4 landscape;
+      margin: 10mm;
+    }
+    body * {
+      visibility: hidden !important;
+    }
+    #printable-certificate, #printable-certificate * {
+      visibility: visible !important;
+    }
+    #printable-certificate {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      padding: 12px !important;
+      box-shadow: none !important;
+      background: #fff !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    .certificate-border {
+      width: 100% !important;
+      padding: 2rem !important;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="badge-school">الثانوية ٣١ | المختبر بيئة آمنة لعقول مستكشفة</div>
+    <div class="title-block">
+      <h1>🔬 ورشة عمل: مستكشفات المختبر</h1>
+      <p>رحلة في عالم العلوم ... بأمان ومعرفة | أستكشف • أتعلم • أطبق لأصنع الفرق</p>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 6px; align-items: center;">
+      <div class="badge-school">معاً ... نحو جيل علمي واعٍ ومبدع</div>
+      <div style="font-size: 0.85rem; color: #fef5e3; font-weight: 700; text-align: center; display: flex; flex-direction: column; gap: 2px;">
+        <span>بإشراف المعلمة: هدى علي الزهراني</span>
+        <span>مديرة المدرسة: عبير العبادي</span>
+      </div>
+    </div>
+  </div>
+
+  <nav id="main-nav">
+    <button class="nav-btn active" onclick="showPage('page1', this)">1️⃣ الاستبيان القبلي</button>
+    <button class="nav-btn" onclick="showPage('page2', this)">2️⃣ إنجازات الطالبات (فيديو)</button>
+    <button class="nav-btn" onclick="showPage('page3', this)">3️⃣ محاور الورشة والسلامة</button>
+    <button class="nav-btn" onclick="showPage('page4', this)">4️⃣ أدوات المختبر</button>
+    <button class="nav-btn" onclick="showPage('page5', this)">5️⃣ الاستبيان البعدي</button>
+    <button class="nav-btn" onclick="showPage('page6', this)">6️⃣ شهادة الإنجاز</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ==================== الصفحة 1: الاستبيان القبلي ==================== -->
+  <section id="page1" class="page-section active">
+    <div class="card">
+      <h2 class="section-title">📋 بطاقة تعريف الورشة والاستبيان القبلي</h2>
+      
+      <div class="meta-grid">
+        <div class="meta-box">
+          <strong>👩‍🎓 الفئة المستهدفة</strong>
+          <span>طالبات المرحلة الثانوية</span>
+        </div>
+        <div class="meta-box">
+          <strong>⏱️ مدة الورشة</strong>
+          <span>ساعة واحدة</span>
+        </div>
+        <div class="meta-box">
+          <strong>📍 مكان وأسلوب التنفيذ</strong>
+          <span>مختبر العلوم / عن بُعد غير متزامن (عرض تفاعلي، أنشطة، تطبيق عملي)</span>
+        </div>
+        <div class="meta-box">
+          <strong>🎯 الهدف العام</strong>
+          <span>تعزيز ثقافة استخدام المختبر المدرسي بطريقة آمنة وفعالة وتنمية مهارات الاستكشاف.</span>
+        </div>
+      </div>
+
+      <div class="quiz-intro">
+        <strong>عزيزتي الطالبة:</strong> يهدف هذا الاستبيان القبلي المختصر إلى قياس معرفتكِ واتجاهاتكِ المبدئية قبل بدء الورشة. لا توجد إجابة صحيحة أو خاطئة في أسئلة الرأي، أجيبي بصدق ووضوح.
+      </div>
+
+      <form id="preQuizForm" onsubmit="submitPreQuiz(event)">
+        <div class="form-group">
+          <label class="q-label">اسم الطالبة الثلاثي (سيُستخدم لاحقاً في شهادة الإنجاز):</label>
+          <input type="text" id="studentNameInput" class="input-text" placeholder="اكتبي اسمكِ الثلاثي هنا..." required>
+        </div>
+
+        <div class="form-group">
+          <label class="q-label">1. ما مدى معرفتكِ بقواعد الأمن والسلامة وإجراءات الطوارئ داخل مختبر العلوم؟</label>
+          <div class="options-list">
+            <label class="option-item"><input type="radio" name="pre_q1" value="مرتفعة" required> مرتفعة (أعرفها وأطبقها بدقة)</label>
+            <label class="option-item"><input type="radio" name="pre_q1" value="متوسطة"> متوسطة (أعرف بعض القواعد الأساسية)</label>
+            <label class="option-item"><input type="radio" name="pre_q1" value="منخفضة"> منخفضة (أحتاج إلى التعرف عليها)</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="q-label">2. عند ملاحظة رمز (لهب) على عبوة مادة كيميائية، فماذا يعني ذلك؟</label>
+          <div class="options-list">
+            <label class="option-item"><input type="radio" name="pre_q2" value="1" required> مادة قابلة للاشتعال يجب إبعادها عن مصادر الحرارة</label>
+            <label class="option-item"><input type="radio" name="pre_q2" value="0"> مادة سامة تسبب التسمم عند الاستنشاق</label>
+            <label class="option-item"><input type="radio" name="pre_q2" value="0"> مادة آمنة للتسخين المباشر</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="q-label">3. ما التصرف الصحيح عند حدوث انسكاب لمادة كيميائية أو كسر أداة زجاجية في المختبر؟</label>
+          <div class="options-list">
+            <label class="option-item"><input type="radio" name="pre_q3" value="1" required> عدم لمسها وإبلاغ المعلمة فوراً لاتخاذ الإجراء المناسب</label>
+            <label class="option-item"><input type="radio" name="pre_q3" value="0"> مسحها بالمناديل الورقية بسرعة دون إخبار أحد</label>
+            <label class="option-item"><input type="radio" name="pre_q3" value="0"> ترك المكان والانصراف بهدوء</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="q-label">4. هل تستطيعين التمييز بين وظائف أدوات المختبر (مثل أدوات الضوء، الحرارة، المغناطيس، والأدوات الزجاجية)؟</label>
+          <div class="options-list">
+            <label class="option-item"><input type="radio" name="pre_q4" value="نعم" required> نعم، أميّز بينها بسهولة</label>
+            <label class="option-item"><input type="radio" name="pre_q4" value="إلى حد ما"> إلى حد ما</label>
+            <label class="option-item"><input type="radio" name="pre_q4" value="لا"> لا، أرغب في تعلمها</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="q-label">5. ما أهمية التحنيط والحفظ العلمي للكائنات الحية في المختبر برأيكِ؟</label>
+          <div class="options-list">
+            <label class="option-item"><input type="radio" name="pre_q5" value="1" required> حفظ العينات لفترات طويلة لدراسة تراكيبها وتشريحها علمياً</label>
+            <label class="option-item"><input type="radio" name="pre_q5" value="0"> استخدامها للزينة فقط في أرفف المختبر</label>
+            <label class="option-item"><input type="radio" name="pre_q5" value="0"> التخلص من الكائنات الزائدة في البيئة</label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary">حفظ الإجابات والانتقال للتالي ⬅️</button>
+      </form>
+
+      <div id="preResult" class="result-banner"></div>
+    </div>
+
+    <div class="page-nav-footer">
+      <span></span>
+      <button class="btn-gold" onclick="goToPage('page2')">التالي: إنجازات الطالبات ⬅️</button>
+    </div>
+  </section>
+
+  <!-- ==================== الصفحة 2: فيديوهات إنجازات الطالبات ==================== -->
+  <section id="page2" class="page-section">
+    <div class="card">
+      <h2 class="section-title">🎬 إنجازات وتجارب طالبات الثانوية ٣١</h2>
+      <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+        اضغطي على زر التشغيل في أي فيديو لمشاهدته بملء الإطار:
+      </p>
+
+      <div class="videos-list">
+
+        <!-- فيديو 1 -->
+        <div class="video-card">
+          <div style="background: var(--gold-light); color: #92400e; text-align: center; padding: 6px 12px; font-size: 0.9rem; font-weight: 700; border-bottom: 1px solid #fde68a;">💡 اضغط مرتين على الفيديو لمشاهدته في شاشة كاملة</div>
+          <div class="video-stage" id="stage1">
+            <div class="video-poster-overlay" onclick="loadVideo('stage1', '1yGDWwv5jYvK61dI7mjibLHfjNOWyxvR5')">
+              <div class="play-circle">▶</div>
+              <h5>اضغطي هنا لتشغيل الفيديو الأول</h5>
+              <p>عرض متكامل متناسب مع إطار الشاشة</p>
+            </div>
+          </div>
+          <div class="video-header-bar" style="border-bottom: none; border-top: 1px solid #b2dfdb; flex-direction: column; align-items: flex-start; gap: 4px;">
+            <h4>🌟 إنجاز وتجربة الطالبات (1)</h4>
+            <span style="font-size: 0.9rem; color: var(--teal-dark); font-weight: 700;">الطالبات المشاركات: مرام محمود، نوف عنتر، هاجر محمد، فيْ الزهراني</span>
+          </div>
+        </div>
+
+        <!-- فيديو 2 -->
+        <div class="video-card">
+          <div style="background: var(--gold-light); color: #92400e; text-align: center; padding: 6px 12px; font-size: 0.9rem; font-weight: 700; border-bottom: 1px solid #fde68a;">💡 اضغط مرتين على الفيديو لمشاهدته في شاشة كاملة</div>
+          <div class="video-stage" id="stage2">
+            <div class="video-poster-overlay" onclick="loadVideo('stage2', '1RMlFzZuRRvVdt2EMcGRafU83KF_Z3fE6')">
+              <div class="play-circle">▶</div>
+              <h5>اضغطي هنا لتشغيل الفيديو الثاني</h5>
+              <p>عرض متكامل متناسب مع إطار الشاشة</p>
+            </div>
+          </div>
+          <div class="video-header-bar" style="border-bottom: none; border-top: 1px solid #b2dfdb; flex-direction: column; align-items: flex-start; gap: 4px;">
+            <h4>🌟 إنجاز وتجربة الطالبات (2)</h4>
+            <span style="font-size: 0.9rem; color: var(--teal-dark); font-weight: 700;">الطالبات المشاركات: وتين باحسن، وسم العصيمي، حور المالكي، جوري سندي، دلال العطافي</span>
+          </div>
+        </div>
+
+        <!-- فيديو 3 -->
+        <div class="video-card">
+          <div style="background: var(--gold-light); color: #92400e; text-align: center; padding: 6px 12px; font-size: 0.9rem; font-weight: 700; border-bottom: 1px solid #fde68a;">💡 اضغط مرتين على الفيديو لمشاهدته في شاشة كاملة</div>
+          <div class="video-stage" id="stage3">
+            <div class="video-poster-overlay" onclick="loadVideo('stage3', '1W1avBKSpmFmu222-PyoXK63z63L7l3Ko')">
+              <div class="play-circle">▶</div>
+              <h5>اضغطي هنا لتشغيل الفيديو الثالث</h5>
+              <p>عرض متكامل متناسب مع إطار الشاشة</p>
+            </div>
+          </div>
+          <div class="video-header-bar" style="border-bottom: none; border-top: 1px solid #b2dfdb; flex-direction: column; align-items: flex-start; gap: 4px;">
+            <h4>🌟 إنجاز وتجربة الطالبات (3)</h4>
+            <span style="font-size: 0.9rem; color: var(--teal-dark); font-weight: 700;">الطالبات المشاركات: فرح العبيدي، رنا ماجد، دالي سعد الزهراني، نورة بلال</span>
+          </div>
+        </div>
+
+        <!-- فيديو 4 -->
+        <div class="video-card">
+          <div style="background: var(--gold-light); color: #92400e; text-align: center; padding: 6px 12px; font-size: 0.9rem; font-weight: 700; border-bottom: 1px solid #fde68a;">💡 اضغط مرتين على الفيديو لمشاهدته في شاشة كاملة</div>
+          <div class="video-stage" id="stage4">
+            <div class="video-poster-overlay" onclick="loadVideo('stage4', '13WDd6ssuzGChV6ZVb2fWvyZGYtgvwqsR')">
+              <div class="play-circle">▶</div>
+              <h5>اضغطي هنا لتشغيل الفيديو الرابع</h5>
+              <p>عرض متكامل متناسب مع إطار الشاشة</p>
+            </div>
+          </div>
+          <div class="video-header-bar" style="border-bottom: none; border-top: 1px solid #b2dfdb; flex-direction: column; align-items: flex-start; gap: 4px;">
+            <h4>🌟 إنجاز وتجربة الطالبات (4)</h4>
+            <span style="font-size: 0.9rem; color: var(--teal-dark); font-weight: 700;">الطالبات المشاركات: هاجر رشدي، جنى حريب، أميرة، ملك، رند المالكي</span>
+          </div>
+        </div>
+
+        <!-- فيديو 5 -->
+        <div class="video-card">
+          <div style="background: var(--gold-light); color: #92400e; text-align: center; padding: 6px 12px; font-size: 0.9rem; font-weight: 700; border-bottom: 1px solid #fde68a;">💡 اضغط مرتين على الفيديو لمشاهدته في شاشة كاملة</div>
+          <div class="video-stage" id="stage5">
+            <div class="video-poster-overlay" onclick="loadVideo('stage5', '1VamMPFRU5R0C84evCqUpxqd5d3C2xbs5')">
+              <div class="play-circle">▶</div>
+              <h5>اضغطي هنا لتشغيل الفيديو الخامس</h5>
+              <p>عرض متكامل متناسب مع إطار الشاشة</p>
+            </div>
+          </div>
+          <div class="video-header-bar" style="border-bottom: none; border-top: 1px solid #b2dfdb; flex-direction: column; align-items: flex-start; gap: 4px;">
+            <h4>🌟 إنجاز وتجربة الطالبات (5)</h4>
+            <span style="font-size: 0.9rem; color: var(--teal-dark); font-weight: 700;">الطالبات المشاركات: آية عبد العظيم، رغد زنيم، رشا يزيد</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="page-nav-footer">
+      <button class="btn-primary" onclick="goToPage('page1')">➡️ السابق: الاستبيان القبلي</button>
+      <button class="btn-gold" onclick="goToPage('page3')">التالي: محاور الورشة ⬅️</button>
+    </div>
+  </section>
+
+  <!-- ==================== الصفحة 3: محاور الورشة وقواعد السلامة ==================== -->
+  <section id="page3" class="page-section">
+    
+    <div class="card">
+      <h2 class="section-title">🎯 الأهداف التفصيلية ونواتج التعلم</h2>
+      <div class="two-col">
+        <div>
+          <h4 style="color: var(--teal-dark); margin-bottom: 8px;">📌 الأهداف التفصيلية للورشة:</h4>
+          <ul style="padding-right: 1.3rem; color: var(--text-muted);">
+            <li>التعرف على المختبر المدرسي وأهميته ومرافقه.</li>
+            <li>فهم دور المختبر في تبسيط المفاهيم والتجارب العلمية.</li>
+            <li>اكتساب مهارات الأمن والسلامة في المختبر.</li>
+            <li>التعرف على التحنيط والحفظ العلمي للكائنات الحية.</li>
+            <li>التعامل الصحيح مع المواد الكيميائية ورموز التحذير.</li>
+            <li>تنمية مهارات الملاحظة والتفكير العلمي والتطبيق العملي.</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="color: var(--teal-dark); margin-bottom: 8px;">💡 نواتج التعلم المتوقعة:</h4>
+          <ul style="padding-right: 1.3rem; color: var(--text-muted);">
+            <li>توضح الطالبة أهمية المختبر واستخداماته.</li>
+            <li>تطبق قواعد السلامة في المختبر بدقة.</li>
+            <li>تتعرف على العينات المحفوظة وأهميتها العلمية.</li>
+            <li>تفسر رموز التحذير الكيميائية.</li>
+            <li>تتعامل مع المواد الكيميائية بطريقة آمنة.</li>
+            <li>تُظهر مهارات الملاحظة والتفكير العلمي.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="section-title">🧭 شرح محاور الورشة الأربعة والأنشطة التفاعلية</h2>
+      <p style="color: var(--text-muted); margin-bottom: 1.3rem;">
+        اقرئي شرح كل محور من محاور الورشة الأربعة، ثم تفاعلي مع النشاط التطبيقي أسفل كل محور لاختبار فهمكِ مباشرة:
+      </p>
+
+      <div class="axes-grid">
+        
+        <!-- المحور الأول -->
+        <div class="axis-card">
+          <h3><span class="axis-num">1</span> أهمية المختبر والتعريف بالمحتوى</h3>
+          <p style="font-size: 0.93rem; margin-bottom: 10px; color: var(--text-dark);">
+            يُعد المختبر المدرسي القلب النابض لتدريس العلوم؛ فهو البيئة التطبيقية الآمنة التي تحوّل القوانين والنظريات المجردة في الكتاب إلى حقائق ملموسة تشاهدها الطالبة وتختبرها بنفسها.
+          </p>
+          <ul>
+            <li><strong>مكونات المختبر ومرافقه:</strong> يضم طاولات التجارب المقاومة للمواد الكيميائية، خزائن حفظ الأدوات والمحاليل، أحواض الغسيل، ومخارج الطوارئ.</li>
+            <li><strong>تبسيط المفاهيم العلمية:</strong> التجربة المباشرة ترسّخ المعلومة في الذاكرة وتجعل الفهم أعمق وأسهل.</li>
+            <li><strong>تنمية مهارات البحث:</strong> يعوّد المختبر الطالبة على الملاحظة الدقيقة، طرح التساؤلات، صياغة الفرضيات، واستخلاص النتائج.</li>
+            <li><strong>المسؤولية والمحافظة على المرافق:</strong> الحفاظ على نظافة الطاولة وإعادة الأدوات نظيفة لمكانها الصحيح بعد انتهاء التجربة.</li>
+          </ul>
+
+          <div class="interactive-activity-box">
+            <h5>🎮 نشاط تفاعلي (1): اكتشفي دور المختبر</h5>
+            <p style="font-size: 0.86rem; margin-bottom: 8px; color: var(--text-muted);">ما الفائدة الأساسية من إجراء التجربة عملياً في المختبر بدلاً من الاكتفاء بقراءتها؟</p>
+            <button type="button" class="mini-choice-btn" onclick="checkAxisActivity('fb1', true, 'أحسنتِ! التجربة العملية تربط النظرية بالواقع وتنمي مهارة الاستنتاج العلمي.')">أ) ربط المفاهيم النظرية بالتطبيق العملي وتنمية الملاحظة</button>
+            <button type="button" class="mini-choice-btn" onclick="checkAxisActivity('fb1', false, 'حاولي مرة أخرى! المختبر يهدف للفهم والاستكشاف وليس الحفظ الآلي فقط.')">ب) حفظ النصوص دون الحاجة لفهم سبب حدوث الظاهرة</button>
+            <div id="fb1" class="mini-feedback"></div>
+          </div>
+        </div>
+
+        <!-- المحور الثاني -->
+        <div class="axis-card">
+          <h3><span class="axis-num">2</span> التحنيط والحفظ العلمي للكائنات الحية</h3>
+          <p style="font-size: 0.93rem; margin-bottom: 10px; color: var(--text-dark);">
+            التحنيط والحفظ العلمي هو معالجة علمية دقيقة للكائنات الحية أو أعضائها لحمايتها من التحلل البكتيري والفطري، بحيث تبقى محتفظة بشكلها الخارجي وتراكيبها الداخلية لسنوات طويلة.
+          </p>
+          <ul>
+            <li><strong>طرق الحفظ العلمي:</strong> الحفظ الرطب (غمر العينة في محاليل حافظة داخل برطمانات زجاجية محكمة الإغلاق) أو التحنيط الجاف (تفريغ الأحشاء ومعالجة الجلد وتجفيفه).</li>
+            <li><strong>أهمية العينات المحفوظة:</strong> تتيح للطالبات دراسة كائنات نادرة أو موسمية في أي وقت دون الإضرار بالبيئة بجمع عينات جديدة باستمرار.</li>
+            <li><strong>أمثلة من مختبرنا:</strong> عينات الأسماك، الزواحف، البرمائيات، والحشرات، بالإضافة إلى نماذج أعضاء الجسم.</li>
+            <li><strong>آداب التعامل مع العينات:</strong> عدم فتح البرطمانات المحفوظة أو رجّها بقوة، والاكتفاء بالمشاهدة والتدوين العلمي.</li>
+          </ul>
+
+          <div class="interactive-activity-box">
+            <h5>🎮 نشاط تفاعلي (2): فكّري واستنتجي</h5>
+            <p style="font-size: 0.86rem; margin-bottom: 8px; color: var(--text-muted);">لماذا تُحفظ بعض العينات الحيوانية في سوائل داخل برطمانات زجاجية محكمة؟</p>
+            <button type="button" class="mini-choice-btn" onclick="checkAxisActivity('fb2', false, 'غير صحيح، السائل مادة حافظة تمنع التحلل وليست للزينة.')">أ) لإعطاء مظهر جمالي فقط على أرفف المختبر</button>
+            <button type="button" class="mini-choice-btn" onclick="checkAxisActivity('fb2', true, 'إجابة رائعة! المحلول الحافظ يوقف نشاط البكتيريا ويحافظ على أنسجة العينة للدراسة.')">ب) لمنع تحلل أنسجتها ودراسة تراكيبها العلمية بدقة</button>
+            <div id="fb2" class="mini-feedback"></div>
+          </div>
+        </div>
+
+        <!-- المحور الثالث -->
+        <div class="axis-card">
+          <h3><span class="axis-num">3</span> الأمن والسلامة في المختبر</h3>
+          <p style="font-size: 0.93rem; margin-bottom: 10px; color: var(--text-dark);">
+            السلامة أولاً هو المبدأ الذهبي في كل مختبر علمي؛ فالالتزام بالتعليمات الوقائية يحميكِ ويحمي زميلاتكِ من أي مخاطر حرارية أو كيميائية أو زجاجية.
+          </p>
+          <ul>
+            <li><strong>الاستعداد قبل التجربة:</strong> قراءة خطوات التجربة جيداً، وارتداء المعطف المخبري (اللابكوت)، والقفازات، والنظارة الواقية، وربط الشعر الطويل.</li>
+            <li><strong>السلوك المنضبط:</strong> يمنع منعاً باتاً الجري أو المزاح أو إدخال الأطعمة والمشروبات إلى المختبر.</li>
+            <li><strong>معدات الأمان والطوارئ:</strong> التعرف المسبق على مكان طفاية الحريق، بطانية الحريق، دش الطوارئ وغسيل العينين، وحقيبة الإسعافات.</li>
+            <li><strong>التصرف السليم عند الكسر أو الانسكاب:</strong> الابتعاد بهدوء وعدم لمس الزجاج المكسور أو السائل باليد، وإبلاغ المعلمة فوراً.</li>
+          </ul>
+
+          <div class="interactive-activity-box">
+            <h5>🎮 نشاط تفاعلي (3): صح أم خطأ؟</h5>
+            <p style="font-size: 0.86rem; margin-bottom: 8px; color: var(--text-muted);">«إذا انكسر أنبوب اختبار زجاجي على الطاولة، أقوم بجمع قطعه بيدي بسرعة قبل أن تراه المعلمة».</p>
+            <button type="button" class="mini-choice-btn" onclick="checkAxisActivity('fb3', false, 'خطأ! لمس الزجاج المكسور باليد يعرضكِ للجروح والتلوث بالمواد.')">✔️ عبارة صحيحة</button>
+            <button type="button" class="mini-choice-btn" onclick="checkAxisActivity('fb3', true, 'ممتازة! العبارة خاطئة؛ الصواب عدم لمس الزجاج وإبلاغ المعلمة فوراً.')">❌ عبارة خاطئة</button>
+            <div id="fb3" class="mini-feedback"></div>
+          </div>
+        </div>
+
+        <!-- المحور الرابع -->
+        <div class="axis-card">
+          <h3><span class="axis-num">4</span> التعامل مع المواد الكيميائية</h3>
+          <p style="font-size: 0.93rem; margin-bottom: 10px; color: var(--text-dark);">
+            تتنوع المواد الكيميائية في المختبر بين أحماض وقواعد وأملاح ومذيبات، ولكل مادة خصائصها ودرجة خطورتها التي يوضحها الملصق التحذيري على العبوة.
+          </p>
+          <ul>
+            <li><strong>قراءة البطاقة التعريفية:</strong> التحقق من اسم المادة وتركيزها ورمز التحذير المطبوع عليها ثلاث مرات قبل الاستخدام.</li>
+            <li><strong>قواعد الشم والتذوق:</strong> يُمنع تذوق أي مادة كيميائية أو شمّها مباشرة؛ وعند الحاجة للشم يُحرّك البخار باليد برفق نحو الأنف.</li>
+            <li><strong>تخفيف الأحماض:</strong> عند تخفيف الحمض يُضاف الحمض ببطء إلى الماء (وليس العكس) لتجنب الفوران والحرارة المفاجئة.</li>
+            <li><strong>حفظ العبوات:</strong> عدم إرجاع المادة الفائضة إلى العبوة الأصلية حتى لا تتلوث، وإغلاق الأغطية بإحكام فور الانتهاء.</li>
+          </ul>
+
+          <div class="interactive-activity-box">
+            <h5>🎮 نشاط تفاعلي (4): اختبري معرفتكِ بالرموز</h5>
+            <p style="font-size: 0.86rem; margin-bottom: 8px; color: var(--text-muted);">شاهدتِ على عبوة كيميائية رمز (أنبوب يسكب سائلاً يتآكل به اليد والمعدن 🧪)، ماذا يعني؟</p>
+            <button type="button" class="mini-choice-btn" onclick="checkAxisActivity('fb4', true, 'صحيح! هذا رمز المادة الأكّالة (الكاوية) التي تتطلب ارتداء القفازات والنظارة الواقية.')">أ) مادة أكّالة (كاوية) تسبب حروقاً وتآكلاً</button>
+            <button type="button" class="mini-choice-btn" onclick="checkAxisActivity('fb4', false, 'حاولي مجدداً! رمز اللهب يدل على الاشتعال، أما هذا الرمز فيدل على التآكل.')">ب) مادة قابلة للاشتعال عند التعرض للشمس</button>
+            <div id="fb4" class="mini-feedback"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <h3 style="color: var(--teal-dark); margin-top: 1.8rem; margin-bottom: 0.5rem;">⚠️ رموز التحذير الكيميائية العالمية:</h3>
+      <div class="hazards-grid">
+        <div class="hazard-item">
+          <div class="hazard-diamond"><span>🔥</span></div>
+          <strong>قابل للاشتعال</strong>
+          <p>يشتعل بسرعة عند تعرضه للهب أو الشرر أو الحرارة.</p>
+        </div>
+        <div class="hazard-item">
+          <div class="hazard-diamond"><span>🧪</span></div>
+          <strong>مادة أكّالة (كاوية)</strong>
+          <p>تسبب حروقاً شديدة للجلد والعين وتآكل المعادن.</p>
+        </div>
+        <div class="hazard-item">
+          <div class="hazard-diamond"><span>☠️</span></div>
+          <strong>مادة سامة</strong>
+          <p>خطيرة جداً عند الاستنشاق أو البلع أو ملامسة الجلد.</p>
+        </div>
+        <div class="hazard-item">
+          <div class="hazard-diamond"><span>❗</span></div>
+          <strong>مادة مهيجة / ضارة</strong>
+          <p>تسبب حساسية أو تهيجاً للجلد والجهاز التنفسي.</p>
+        </div>
+        <div class="hazard-item">
+          <div class="hazard-diamond"><span>🐟</span></div>
+          <strong>خطر على البيئة</strong>
+          <p>تلوث المياه وتضر بالكائنات الحية عند سكبها في الصرف.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="section-title">🛡️ قواعد السلامة والعمل في حالة الطوارئ</h2>
+      <div class="two-col">
+        <div>
+          <h4 style="color: var(--teal-dark); margin-bottom: 10px;">📋 قواعد السلامة في المختبر:</h4>
+          <ul class="safety-list">
+            <li>1. اتبعي التعليمات الإرشادية للمعلمة دائماً.</li>
+            <li>2. ارتدي أدوات الوقاية الشخصية (المعطف، القفازات، النظارة).</li>
+            <li>3. حافظي على نظافة المكان وترتيب طاولة العمل.</li>
+            <li>4. لا تلمسي المواد أو الأجهزة دون إذن مسبق.</li>
+            <li>5. تخلصي من النفايات الكيميائية والزجاجية بالطريقة الصحيحة.</li>
+            <li>6. أبلغي المعلمة فوراً عن أي حادث أو انسكاب.</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="color: var(--coral); margin-bottom: 10px;">🚨 العمل في حالة الطوارئ:</h4>
+          <ul class="safety-list emergency-list">
+            <li>1. حافظي على الهدوء وتجنبي التدافع.</li>
+            <li>2. اتبعي تعليمات المعلمة بدقة وسرعة.</li>
+            <li>3. استخدمي مخارج الطوارئ المحددة عند الإخلاء.</li>
+            <li>4. أبلغي عن الحادث أو الحريق فوراً.</li>
+            <li>5. استخدمي حقيبة الإسعافات الأولية عند الحاجة بإشراف المعلمة.</li>
+            <li>6. لا تحاولي التعامل مع المواد الخطرة بمفردكِ إطلاقاً.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-nav-footer">
+      <button class="btn-primary" onclick="goToPage('page2')">➡️ السابق: إنجازات الطالبات</button>
+      <button class="btn-gold" onclick="goToPage('page4')">التالي: أدوات المختبر ⬅️</button>
+    </div>
+  </section>
+
+  <!-- ==================== الصفحة 4: أدوات المختبر ==================== -->
+  <section id="page4" class="page-section">
+    <div class="card">
+      <h2 class="section-title">🧰 أدوات المختبر المدرسي واستخداماتها</h2>
+      <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+        اضغطي على اسم أي أداة من القائمة المرقمة التالية ليظهر لكِ شرحها العلمي وأمثلتها داخل المختبر:
+      </p>
+
+      <div class="tools-accordion">
+        
+        <div class="tool-acc-item" onclick="toggleToolAcc(this)">
+          <button type="button" class="tool-acc-header">
+            <span class="tool-acc-title"><span class="tool-acc-badge">1</span> 🧲 المغناطيس</span>
+            <span class="tool-acc-arrow">▼</span>
+          </button>
+          <div class="tool-acc-body">
+            <p style="color: var(--text-dark); margin-bottom: 10px;">
+              أدوات تُستخدم لدراسة قوى التجاذب والتنافر المغناطيسي، وتحديد الأقطاب المغناطيسية (الشمالي والجنوبي)، وتخطيط خطوط المجال المغناطيسي، وفهم العلاقة بين الكهرباء والمغناطيسية.
+            </p>
+            <div class="tool-examples">أمثلة: المغناطيس المستقيم، المغناطيس على شكل حدوة فرس، البوصلة المغناطيسية، وبرادة الحديد.</div>
+          </div>
+        </div>
+
+        <div class="tool-acc-item" onclick="toggleToolAcc(this)">
+          <button type="button" class="tool-acc-header">
+            <span class="tool-acc-title"><span class="tool-acc-badge">2</span> 🧪 الأدوات الزجاجية</span>
+            <span class="tool-acc-arrow">▼</span>
+          </button>
+          <div class="tool-acc-body">
+            <p style="color: var(--text-dark); margin-bottom: 10px;">
+              أوانٍ مصنوعة غالباً من زجاج البايركس المقاوم للحرارة والتفاعلات الكيميائية، وتُستخدم في قياس حجوم السوائل بدقة، وخلط المحاليل، وتسخين المواد، وإجراء التفاعلات الكيميائية.
+            </p>
+            <div class="tool-examples">أمثلة: الكأس الزجاجي (البيكر)، المخبار المدرج، الدورق المخروطي، أنابيب الاختبار، والماصة.</div>
+          </div>
+        </div>
+
+        <div class="tool-acc-item" onclick="toggleToolAcc(this)">
+          <button type="button" class="tool-acc-header">
+            <span class="tool-acc-title"><span class="tool-acc-badge">3</span> ⚡ الكهرباء</span>
+            <span class="tool-acc-arrow">▼</span>
+          </button>
+          <div class="tool-acc-body">
+            <p style="color: var(--text-dark); margin-bottom: 10px;">
+              مجموعة من العناصر والأجهزة التي تتيح للطالبة بناء الدوائر الكهربائية على التوالي والتوازي، وقياس شدة التيار الكهربائي وفرق الجهد والمقاومة الكهربائية.
+            </p>
+            <div class="tool-examples">أمثلة: البطاريات ومصادر الجهد، أسلاك التوصيل، المصابيح، المفاتيح، الأميتر، والفولتميتر.</div>
+          </div>
+        </div>
+
+        <div class="tool-acc-item" onclick="toggleToolAcc(this)">
+          <button type="button" class="tool-acc-header">
+            <span class="tool-acc-title"><span class="tool-acc-badge">4</span> 🔦 الضوء</span>
+            <span class="tool-acc-arrow">▼</span>
+          </button>
+          <div class="tool-acc-body">
+            <p style="color: var(--text-dark); margin-bottom: 10px;">
+              أدوات بصرية تُستخدم لاستكشاف طبيعة الضوء وانتشاره في خطوط مستقيمة، ودراسة ظاهرتي الانعكاس والانكسار، وتحليل الضوء الأبيض إلى ألوان الطيف السبعة.
+            </p>
+            <div class="tool-examples">أمثلة: المنشور الزجاجي، العدسات المحدبة والمقعرة، المرايا المستوية والكروية، ومصدر الأشعة الضوئية.</div>
+          </div>
+        </div>
+
+        <div class="tool-acc-item" onclick="toggleToolAcc(this)">
+          <button type="button" class="tool-acc-header">
+            <span class="tool-acc-title"><span class="tool-acc-badge">5</span> 🔔 أدوات الصوت</span>
+            <span class="tool-acc-arrow">▼</span>
+          </button>
+          <div class="tool-acc-body">
+            <p style="color: var(--text-dark); margin-bottom: 10px;">
+              أدوات علمية توضح كيفية نشأة الصوت عن طريق اهتزاز الأجسام، وتساعد في دراسة خصائص الموجات الصوتية مثل التردد، الشدة، الرنين، وانتقال الصوت في الأوساط المختلفة.
+            </p>
+            <div class="tool-examples">أمثلة: الشوكات الرنانة ذات الترددات المختلفة، صناديق الرنين الخشبية، والمطرقة المطاطية.</div>
+          </div>
+        </div>
+
+        <div class="tool-acc-item" onclick="toggleToolAcc(this)">
+          <button type="button" class="tool-acc-header">
+            <span class="tool-acc-title"><span class="tool-acc-badge">6</span> 🌡️ أدوات الحرارة</span>
+            <span class="tool-acc-arrow">▼</span>
+          </button>
+          <div class="tool-acc-body">
+            <p style="color: var(--text-dark); margin-bottom: 10px;">
+              أجهزة وأدوات مخصصة لقياس درجات الحرارة بدقة، وملاحظة تمدد المواد بالحرارة، ودراسة طرق انتقال الحرارة (التوصيل، الحمل، والإشعاع) والتغيرات الفيزيائية للمادة.
+            </p>
+            <div class="tool-examples">أمثلة: الترمومترات (الزئبقية والكحولية والرقمية)، موقد بنسن، والمسعرات الحرارية.</div>
+          </div>
+        </div>
+
+        <div class="tool-acc-item" onclick="toggleToolAcc(this)">
+          <button type="button" class="tool-acc-header">
+            <span class="tool-acc-title"><span class="tool-acc-badge">7</span> 🌿 الكائنات الحية والنباتات</span>
+            <span class="tool-acc-arrow">▼</span>
+          </button>
+          <div class="tool-acc-body">
+            <p style="color: var(--text-dark); margin-bottom: 10px;">
+              عينات ونماذج وأدوات تُستخدم لدراسة تركيب الكائنات الحية وأعضاء النباتات، وفهم العمليات الحيوية مثل البناء الضوئي والإنبات والتصنيف البيئي للكائنات.
+            </p>
+            <div class="tool-examples">أمثلة: العينات المحفوظة والمحنطة، المجسمات التشريحية، البذور والشتلات النباتية، وأدوات التشريح.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="page-nav-footer">
+      <button class="btn-primary" onclick="goToPage('page3')">➡️ السابق: محاور الورشة</button>
+      <button class="btn-gold" onclick="goToPage('page5')">التالي: الاستبيان البعدي ⬅️</button>
+    </div>
+  </section>
+
+  <!-- ==================== الصفحة 5: الاستبيان البعدي ==================== -->
+  <section id="page5" class="page-section">
+    <div class="card">
+      <h2 class="section-title">📊 الاستبيان البعدي وقياس الأثر</h2>
+
+      <div class="quiz-intro">
+        <strong>أحسنتِ الوصول إلى هذه المرحلة!</strong> يهدف الاستبيان البعدي المختصر إلى قياس مدى التحسن في معرفتكِ ومهاراتكِ بعد الاطلاع على محاور الورشة وأدوات المختبر، وتفعيل شهادة الإنجاز الخاصة بكِ.
+      </div>
+
+      <form id="postQuizForm" onsubmit="submitPostQuiz(event)">
+        <div class="form-group">
+          <label class="q-label">1. ما مدى استفادتكِ من محاور الورشة في تعزيز وعيكِ بقواعد السلامة في المختبر؟</label>
+          <div class="options-list">
+            <label class="option-item"><input type="radio" name="post_q1" value="ممتازة" required> استفادة كبيرة جداً وممتازة</label>
+            <label class="option-item"><input type="radio" name="post_q1" value="جيدة"> استفادة جيدة</label>
+            <label class="option-item"><input type="radio" name="post_q1" value="محدودة"> استفادة محدودة</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="q-label">2. أيٌّ من الأدوات التالية يُستخدم لقياس حجوم السوائل وإجراء التفاعلات الكيميائية بأمان؟</label>
+          <div class="options-list">
+            <label class="option-item"><input type="radio" name="post_q2" value="1" required> المخبار المدرج والكأس الزجاجي</label>
+            <label class="option-item"><input type="radio" name="post_q2" value="0"> الشوكة الرنانة وصندوق الرنين</label>
+            <label class="option-item"><input type="radio" name="post_q2" value="0"> المنشور الزجاجي والعدسة المحدبة</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="q-label">3. ما الهدف الأساسي من التحنيط والحفظ العلمي للكائنات الحية في المختبر المدرسي؟</label>
+          <div class="options-list">
+            <label class="option-item"><input type="radio" name="post_q3" value="1" required> حفظ العينات ومنع تحللها لدراسة تراكيبها وتشريحها علمياً</label>
+            <label class="option-item"><input type="radio" name="post_q3" value="0"> قياس درجة حرارة الكائنات الحية</label>
+            <label class="option-item"><input type="radio" name="post_q3" value="0"> توليد تيار كهربائي في الدوائر</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="q-label">4. ما الإجراء الصحيح في حالة الطوارئ داخل المختبر؟</label>
+          <div class="options-list">
+            <label class="option-item"><input type="radio" name="post_q4" value="1" required> الحفاظ على الهدوء واتباع تعليمات المعلمة والتوجه لمخرج الطوارئ</label>
+            <label class="option-item"><input type="radio" name="post_q4" value="0"> التعامل مع المواد الخطرة بمفردي</label>
+            <label class="option-item"><input type="radio" name="post_q4" value="0"> الجري والتدافع نحو الباب</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="q-label">5. هل أصبحتِ الآن أكثر قدرة على تحديد وظيفة كل مجموعة من أدوات المختبر وتطبيق قواعد السلامة؟</label>
+          <div class="options-list">
+            <label class="option-item"><input type="radio" name="post_q5" value="نعم بكل تأكيد" required> نعم، بكل تأكيد</label>
+            <label class="option-item"><input type="radio" name="post_q5" value="إلى حد كبير"> إلى حد كبير</label>
+            <label class="option-item"><input type="radio" name="post_q5" value="أحتاج مراجعة"> أحتاج إلى مراجعة إضافية</label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary">اعتماد التقييم البعدي وإصدار الشهادة 🎓</button>
+      </form>
+
+      <div id="postResult" class="result-banner"></div>
+    </div>
+
+    <div class="page-nav-footer">
+      <button class="btn-primary" onclick="goToPage('page4')">➡️ السابق: أدوات المختبر</button>
+      <button class="btn-gold" onclick="goToPage('page6')">التالي: شهادة الإنجاز ⬅️</button>
+    </div>
+  </section>
+
+  <!-- ==================== الصفحة 6: شهادة الإنجاز ==================== -->
+  <section id="page6" class="page-section">
+    <div class="card">
+      <h2 class="section-title">🏆 شهادة إنجاز الورشة التدريبية</h2>
+
+      <div class="cert-controls">
+        <div class="field">
+          <label style="font-weight: 700; color: var(--teal-dark); display: block; margin-bottom: 5px;">اسم الطالبة في الشهادة:</label>
+          <input type="text" id="certNameField" class="input-text" placeholder="اكتبي الاسم الثلاثي ليظهر في الشهادة..." oninput="updateCertName()">
+        </div>
+        <button class="btn-gold" onclick="window.print()">🖨️ طباعة / حفظ الشهادة PDF</button>
+      </div>
+
+      <div class="certificate-wrapper" id="printable-certificate">
+        <div class="certificate-border">
+          <div class="cert-header">الثانوية ٣١ • مختبر العلوم</div>
+          <div class="cert-title">شهادة إنجاز وتقدير</div>
+          <div class="cert-subtitle">ورشة عمل: مستكشفات المختبر (رحلة في عالم العلوم ... بأمان ومعرفة)</div>
+
+          <div class="cert-body">
+            تشهد إدارة المدرسة ومعلمة المختبر بأن الطالبة المبدعة:
+            <span class="cert-student-name" id="displayCertName">............................................</span>
+            قد أتمّت بنجاح متطلبات ورشة العمل التفاعلية <strong>«مستكشفات المختبر»</strong>، واجتازت التطبيقات والاستبيان القبلي والبعدي، وأظهرت وعياً علمياً متميزاً في قواعد الأمن والسلامة واستخدام أدوات المختبر المدرسي.
+            <br>
+            <span style="color: var(--teal-main); font-weight: 700; font-size: 0.95rem; display: inline-block; margin-top: 6px;">متمنين لها دوام التوفيق والتميز العلمي • أستكشف • أتعلم • أطبق لأصنع الفرق</span>
+          </div>
+
+          <div class="cert-signatures">
+            <div class="sig-box">
+              <strong>معلمة المختبر</strong>
+              <span>أ. هدى علي الزهراني</span>
+            </div>
+
+            <div class="cert-seal">
+              الثانوية ٣١<br>مختبر العلوم
+            </div>
+
+            <div class="sig-box">
+              <strong>مديرة المدرسة</strong>
+              <span>أ. عبير العبادي</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-nav-footer">
+      <button class="btn-primary" onclick="goToPage('page5')">➡️ السابق: الاستبيان البعدي</button>
+      <button class="btn-gold" onclick="goToPage('page1')">العودة للبداية 🔄</button>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p><strong>الثانوية ٣١</strong> | إعداد معلمة المختبر: <strong>هدى علي الزهراني</strong> • مديرة المدرسة: <strong>عبير العبادي</strong></p>
+  <p style="font-size: 0.85rem; opacity: 0.85; margin-top: 4px;">المختبر يبدأ منه المستقبل • معاً ... نحو جيل علمي واعٍ ومبدع</p>
+</footer>
+
+<script>
+  function showPage(pageId, btnElement) {
+    document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+
+    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+    if (btnElement) {
+      btnElement.classList.add('active');
+    } else {
+      const targetBtn = document.querySelector(`.nav-btn[onclick*="${pageId}"]`);
+      if (targetBtn) targetBtn.classList.add('active');
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function goToPage(pageId) {
+    showPage(pageId, null);
+  }
+
+  // تحميل الفيديو فقط عند الضغط عليه مع تفعيل البث المباشر بدون شاشة سوداء
+  function loadVideo(stageId, fileId) {
+    const stage = document.getElementById(stageId);
+    stage.innerHTML = `
+      <iframe 
+        src="https://drive.google.com/file/d/${fileId}/preview?controls=0&modestbranding=1&rel=0" 
+        allow="autoplay; fullscreen" 
+        allowfullscreen>
+      </iframe>
+    `;
+  }
+
+  // زر تكبير إطار الفيديو لشاشة كاملة
+  function toggleFullScreen(stageId) {
+    const elem = document.getElementById(stageId);
+    if (!document.fullscreenElement) {
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  }
+
+  function submitPreQuiz(e) {
+    e.preventDefault();
+    const name = document.getElementById('studentNameInput').value.trim();
+    if (name) {
+      document.getElementById('certNameField').value = name;
+      document.getElementById('displayCertName').textContent = name;
+    }
+
+    const q2 = parseInt(document.querySelector('input[name="pre_q2"]:checked').value);
+    const q3 = parseInt(document.querySelector('input[name="pre_q3"]:checked').value);
+    const q5 = parseInt(document.querySelector('input[name="pre_q5"]:checked').value);
+    const score = q2 + q3 + q5;
+
+    const banner = document.getElementById('preResult');
+    banner.style.display = 'block';
+    banner.innerHTML = `✅ تم تسجيل استبيانكِ القبلي بنجاح يا <strong>${name}</strong>! (نتيجة الأسئلة المعرفية المبدئية: ${score} من 3). يمكنكِ الآن الانتقال لمشاهدة إنجازات الطالبات.`;
+  }
+
+  function submitPostQuiz(e) {
+    e.preventDefault();
+    const q2 = parseInt(document.querySelector('input[name="post_q2"]:checked').value);
+    const q3 = parseInt(document.querySelector('input[name="post_q3"]:checked').value);
+    const q4 = parseInt(document.querySelector('input[name="post_q4"]:checked').value);
+    const score = q2 + q3 + q4;
+
+    const banner = document.getElementById('postResult');
+    banner.style.display = 'block';
+    banner.innerHTML = `🎉 رائع! تم اعتماد الاستبيان البعدي بنجاح (درجة التقييم المعرفي: ${score} من 3). شهادة الإنجاز جاهزة لكِ الآن في الصفحة التالية!`;
+  }
+
+  function updateCertName() {
+    const val = document.getElementById('certNameField').value.trim();
+    document.getElementById('displayCertName').textContent = val || '............................................';
+  }
+
+  function checkAxisActivity(fbId, isCorrect, message) {
+    const fb = document.getElementById(fbId);
+    fb.textContent = message;
+    fb.className = 'mini-feedback ' + (isCorrect ? 'ok' : 'err');
+  }
+
+  function toggleToolAcc(item) {
+    item.classList.toggle('open');
+  }
+
+</script>
+
+</body>
+</html>
